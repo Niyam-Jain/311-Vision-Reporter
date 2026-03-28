@@ -44,7 +44,7 @@ session_service = InMemorySessionService()
 
 agent = Agent(
     name="nyc_311_agent",
-    model="gemini-live-2.5-flash-native-audio",
+    model="vertexai/gemini-2.0-flash",
     instruction=SYSTEM_PROMPT,
     tools=[analyze_image, reverse_geocode, query_311_data, draft_complaint],
 )
