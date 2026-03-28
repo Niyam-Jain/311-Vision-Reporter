@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NYC 311 Vision Reporter</title>
+    <meta name="description" content="AI-powered NYC 311 complaint reporter. Snap a photo of an infrastructure issue and file a report instantly.">
+    <meta name="theme-color" content="#0a0a1a">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ===== SCREEN 1: CAPTURE ===== -->
+    <div id="screen-capture" class="screen active">
+        <header class="app-header">
+            <div class="header-badge">
+                <span class="badge-icon">📸</span>
+                <span class="badge-label">311 Vision</span>
+            </div>
+            <h1>Report an Issue</h1>
+            <p class="subtitle">Snap a photo of any NYC infrastructure problem</p>
+        </header>
+
+        <div class="capture-area">
+            <div id="camera-preview-container" class="camera-preview-container">
+                <video id="camera-preview" autoplay playsinline></video>
+                <img id="photo-preview" class="photo-preview hidden" alt="Captured photo">
+                <div id="camera-placeholder" class="camera-placeholder">
+                    <div class="placeholder-icon">📷</div>
+                    <p>Tap to open camera</p>
+                </div>
+            </div>
+
+            <div class="capture-controls">
+                <button id="btn-camera" class="btn-capture" aria-label="Open camera">
+                    <span class="capture-ring"></span>
+                    <span class="capture-dot"></span>
+                </button>
+                <label id="btn-upload" class="btn-upload" aria-label="Upload photo">
+                    <input type="file" id="file-input" accept="image/*" hidden>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="17 8 12 3 7 8"/>
+                        <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                </label>
+            </div>
+        </div>
+
+        <div id="gps-status" class="gps-status">
+            <span class="gps-dot pulse"></span>
+            <span id="gps-text">Acquiring location…</span>
+        </div>
+
+        <button id="btn-submit" class="btn-primary hidden" disabled>
+            <span class="btn-text">Analyze Issue</span>
+            <svg class="btn-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+            </svg>
+        </button>
+    </div>
+
+    <!-- ===== SCREEN 2: CHAT / VOICE ===== -->
+    <div id="screen-chat" class="screen">
+        <header class="chat-header">
+            <button id="btn-back" class="btn-icon" aria-label="Go back">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15 18 9 12 15 6"/>
+                </svg>
+            </button>
+            <div class="chat-title">
+                <span class="chat-agent-dot"></span>
+                <span>311 AI Assistant</span>
+            </div>
+            <button id="btn-new" class="btn-icon" aria-label="New report">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                </svg>
+            </button>
+        </header>
+
+        <div id="chat-messages" class="chat-messages">
+            <!-- Messages injected via JS -->
+        </div>
+
+        <div id="chat-loading" class="chat-loading hidden">
+            <div class="typing-indicator">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+
+        <!-- Mic button centered above input bar -->
+        <div class="mic-bar">
+            <button id="btn-mic" class="btn-mic" aria-label="Hold to speak">
+                <svg id="mic-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                    <line x1="12" y1="19" x2="12" y2="23"/>
+                    <line x1="8" y1="23" x2="16" y2="23"/>
+                </svg>
+                <span id="mic-label">Tap to speak</span>
+            </button>
+        </div>
+
+        <form id="chat-form" class="chat-input-area">
+            <input type="text" id="chat-input" class="chat-input" placeholder="Or type your response…" autocomplete="off">
+            <button type="submit" id="btn-send" class="btn-send" aria-label="Send message">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                </svg>
+            </button>
+        </form>
+    </div>
+
+    <!-- ===== LOADING OVERLAY ===== -->
+    <div id="loading-overlay" class="loading-overlay hidden">
+        <div class="loader-content">
+            <div class="spinner"></div>
+            <p id="loading-text">Analyzing your photo…</p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

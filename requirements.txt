@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]
+google-cloud-aiplatform
+google-adk
+google-generativeai
+httpx
+python-multipart
+python-dotenv
